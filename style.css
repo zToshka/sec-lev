@@ -1,0 +1,208 @@
+:root {
+  --bg1: #ffdde1;
+  --bg2: #ee9ca7;
+  --card: rgba(255, 255, 255, 0.78);
+  --text: #2b2b2b;
+  --yes: #ff4d88;
+  --shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  color: var(--text);
+  background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+  overflow: hidden;
+}
+
+.card {
+  width: min(520px, 92vw);
+  padding: 28px 24px;
+  border-radius: 24px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.55);
+  text-align: center;
+  position: relative;
+}
+
+.hearts {
+  font-size: 22px;
+  opacity: 0.95;
+  margin-bottom: 10px;
+  user-select: none;
+}
+
+h1 {
+  margin: 6px 0 10px;
+  font-size: 32px;
+  line-height: 1.1;
+}
+
+.subtitle {
+  margin: 0 0 18px;
+  opacity: 0.85;
+}
+
+.btn-row {
+  position: relative;
+  height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 14px 18px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  box-shadow: 0 10px 18px rgba(0,0,0,0.10);
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.btn:active { transform: scale(0.98); }
+
+.yes {
+  background: var(--yes);
+  color: white;
+}
+
+.no {
+  background: #e5e7eb;
+  color: #111827;
+  position: relative;
+}
+
+.success {
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(0,0,0,0.15);
+}
+
+.ticket {
+  width: min(360px, 90%);
+  border-radius: 16px;
+  margin: 14px auto 8px;
+  display: block;
+  box-shadow: 0 14px 26px rgba(0,0,0,0.18);
+}
+
+.tiny {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.footer {
+  margin-top: 16px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.hidden { display: none; }
+
+/* Confetti canvas sits behind card but above background */
+#confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* -------------------- */
+/* --- Quiz Panels --- */
+/* -------------------- */
+
+.panel { margin-top: 10px; }
+
+.big {
+  padding: 16px 22px;
+  font-size: 17px;
+}
+
+.progress {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 77, 136, 0.12);
+  overflow: hidden;
+  margin: 12px 0 18px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff4d88, #ff7fb0);
+  transition: width 0.35s ease;
+}
+
+.question-wrap {
+  padding: 14px 14px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.65);
+  border: 1px solid rgba(255,255,255,0.7);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.06);
+}
+
+.q-title {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.q-text {
+  margin: 0;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.options {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.option-btn {
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  padding: 12px 12px;
+  background: rgba(255,255,255,0.85);
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.12s ease;
+  font-size: 15px;
+  text-align: left;
+}
+
+.option-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 234, 244, 0.95);
+}
+
+.option-btn.correct {
+  background: rgba(177, 255, 210, 0.9);
+  border-color: rgba(0,0,0,0.05);
+}
+
+.option-btn.wrong {
+  background: rgba(255, 205, 215, 0.9);
+}
+
+.hint {
+  margin: 10px 0 0;
+  font-size: 13px;
+  opacity: 0.8;
+  min-height: 18px;
+}
+
+.kawaii {
+  margin: 10px 0 8px;
+}

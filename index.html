@@ -1,1 +1,67 @@
-<h1>Hello</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valentine Mission 💘</title>
+
+  <!-- ✅ Correct CSS link -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <main class="card">
+    <div class="hearts" aria-hidden="true">💘 💗 💞 💖</div>
+
+    <h1 id="title">Valentine Mission 💌</h1>
+    <p class="subtitle" id="subtitle">A tiny challenge before the surprise 🎬</p>
+
+    <!-- INTRO -->
+    <section id="intro" class="panel">
+      <button id="startBtn" class="btn yes big">Start the mission ✨</button>
+      <p class="tiny">P.S. You look extra cute today 😌💗</p>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="quiz" class="panel hidden" aria-live="polite">
+      <div class="progress">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+
+      <div class="question-wrap">
+        <h2 id="qTitle" class="q-title">Question</h2>
+        <p id="qText" class="q-text">…</p>
+      </div>
+
+      <div id="options" class="options"></div>
+
+      <p id="quizHint" class="hint"></p>
+    </section>
+
+    <!-- PROPOSAL -->
+    <section id="proposal" class="panel hidden" aria-live="polite">
+      <div class="btn-row" id="btnRow">
+        <button id="yesBtn" class="btn yes">Yes 💖</button>
+        <button id="noBtn" class="btn no">No 🙈</button>
+      </div>
+    </section>
+
+    <!-- SUCCESS -->
+    <section id="success" class="success hidden" aria-live="polite">
+      <!-- ✅ Correct image tag -->
+      <img class="ticket" src="assets/ticket.png" alt="Movie ticket" />
+
+      <p class="tiny">Screenshot this 🎟️ and send me a ❤️</p>
+    </section>
+
+    <footer class="footer">
+      <span>Made with love ✨</span>
+    </footer>
+  </main>
+
+  <canvas id="confetti"></canvas>
+
+  <!-- ✅ Correct JS link -->
+  <script src="script.js"></script>
+</body>
+</html>
