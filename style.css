@@ -182,9 +182,11 @@ h1 {
   text-align: left;
 }
 
-.option-btn:hover {
-  transform: translateY(-1px);
-  background: rgba(255, 234, 244, 0.95);
+@media (hover: hover) {
+  .option-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 234, 244, 0.95);
+  }
 }
 
 .option-btn.correct {
@@ -194,6 +196,8 @@ h1 {
 
 .option-btn.wrong {
   background: rgba(255, 205, 215, 0.9);
+  border-color: #ff4d88; /* Added this to make it look 'official' */
+  color: #be185d;        /* Darker text for error visibility */
 }
 
 .hint {
