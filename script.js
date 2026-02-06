@@ -26,9 +26,9 @@ const questions = [
   {
     title: "Warm-up 😌",
     text: "Which item would you secretly steal from a hotel? 😌",
-    options: ["The mattress (somehow)", "Tiny shampoo bottles", "The TV remote"],
+    options: ["The mattress (somehow)", "Tiny shampoo bottles", "The TV remote", "A Durian"],
     answer: 1,
-    hint: "Be realistic bestie 😭💗"
+    hint: "Be realistic babe 😭💗"
   },
   {
     title: "Clue #1 🛍️",
@@ -40,7 +40,7 @@ const questions = [
   {
     title: "Clue #2 🔥 (hard)",
     text: "Choose the correct iconic luxury-shopping street for the place you picked.",
-    options: ["Via Montenapoleone", "Corso Vittorio Emanuele II", "Rodeo Drive"],
+    options: ["Via Alfieri 13", "Corso Vittorio Emanuele II", "Rodeo Drive"],
     answer: 2,
     hint: "It’s *the* street everyone associates with BH."
   },
@@ -56,7 +56,7 @@ const questions = [
     text: "Which romance dynamic fits a story where two worlds collide?",
     options: ["Opposites attract", "Enemies to lovers", "Friends to lovers"],
     answer: 0,
-    hint: "Rich world vs ordinary world… you know 😌"
+    hint: "Rich world vs ordinary world… you know 🤭"
   }
 ];
 
@@ -147,18 +147,19 @@ function showProposal() {
 
   // Small “reveal” on the heading only now (still not screaming too early)
   document.getElementById("title").textContent = "One last thing… 💌";
-  document.getElementById("subtitle").textContent = "Pretty Woman, will you be my Valentine? 💖";
+  document.getElementById("subtitle").textContent = "Yineka-mu, will you be my Valentine? 💖";
 }
 
 /* -----------------------
    'NO' BUTTON CUTE BEHAVIOR
 ------------------------ */
 const noPhrases = [
-  "No 🙈",
+  "No 🐛",
   "Are you sure? 🥺",
   "Really really sure? 😳",
   "But I got snacks 🍿",
   "And cuddles 🧸",
+  "Why do you hate me?",
   "Ok last chance… 😏",
   "You meant YES 😌"
 ];
@@ -201,7 +202,7 @@ function acceptLove() {
 
   // Cute reveal line:
   document.getElementById("title").textContent = "Pretty Woman Night 💋";
-  document.getElementById("subtitle").textContent = "YAY!! See you for Pretty Woman 💞🎬";
+  document.getElementById("subtitle").textContent = "YAY!! Let's start with an anticipated movie night 💞🎬";
 
   burstConfetti();
 }
@@ -217,7 +218,7 @@ noBtn.addEventListener("click", (e) => {
   growYesButton();
   moveNoButton();
 
-  if (noCount >= 6) {
+  if (noCount >= (noPhrases.length - 1)) {
     noBtn.textContent = "Ok fine… YES 💖";
     noBtn.addEventListener("click", acceptLove, { once: true });
   }
