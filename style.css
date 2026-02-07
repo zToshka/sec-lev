@@ -109,7 +109,10 @@ h1 {
   opacity: 0.7;
 }
 
-.hidden { display: none; }
+/* Update this in your style.css */
+.hidden { 
+  display: none !important; 
+}
 
 /* Confetti canvas sits behind card but above background */
 #confetti {
@@ -209,4 +212,68 @@ h1 {
 
 .kawaii {
   margin: 10px 0 8px;
+}
+
+.reward-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 182, 193, 0.4); /* Light pink tint */
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  border-radius: 24px;
+  animation: fadeIn 0.3s ease;
+}
+
+.reward-content {
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  width: 85%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.reward-content img {
+  width: 100%;
+  border-radius: 12px;
+  margin: 10px 0;
+  border: 3px solid var(--yes);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+#rewardImg {
+  width: 100%;
+  height: auto;           /* Allow height to be flexible */
+  aspect-ratio: 3 / 4;    /* Forces a classic portrait shape */
+  max-height: 55vh;       /* Prevents the image from being too tall on small screens */
+  object-fit: cover;      /* Keeps the photo from stretching */
+  border-radius: 12px;
+  background: #fdf2f4; 
+  border: 3px solid var(--yes);
+  display: block;
+  margin: 10px 0;
+}
+
+#rewardVideo {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  max-height: 55vh;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 3px solid var(--yes);
+  margin: 10px 0;
+  display: block;
+}
+
+/* Ensure hidden videos actually stay hidden */
+#rewardVideo.hidden {
+  display: none !important;
 }

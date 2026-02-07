@@ -28,35 +28,54 @@ const questions = [
     text: "Which item would you secretly steal from a hotel? 😌",
     options: ["The mattress (somehow)", "Tiny shampoo bottles", "The TV remote", "A Durian"],
     answer: 1,
-    hint: "Be realistic babe 😭💗"
+    hint: "Be realistic babe 😭💗",
+    img: "img/IMG_9591.JPG",
+    message: "Remember our first stay together? 🏨"
   },
   {
     title: "Clue #1 🛍️",
-    text: "Which place is most famous for luxury shopping vibes?",
-    options: ["Paris", "Beverly Hills", "Cagliari"],
-    answer: 1,
-    hint: "Sunshine + celebs + designer stores 👀"
+    text: "What was the very first thing you thought when we met?",
+    options: ["He's Cute", "He's intelligent", "He's different", "All of the above"],
+    answer: 2,
+    hint: "I don't care what you thought, I am who I am",
+    img: "img/IMG_9819.JPG",
+    message: "My game, my rules 😎"
   },
   {
     title: "Clue #2 🔥 (hard)",
-    text: "Choose the correct iconic luxury-shopping street for the place you picked.",
-    options: ["Via Alfieri 13", "Corso Vittorio Emanuele II", "Rodeo Drive"],
-    answer: 2,
-    hint: "It’s *the* street everyone associates with BH."
+    text: "What do you think I like the most about you?",
+    options: ["Your intelligence", "I like how real you are", "Your cuteness", "Boobs", "All of the above"],
+    answer: 1,
+    hint: "THE MOST!!! Let's be realistic",
+    img: "img/IMG_9754.JPG",
+    message: "Of course the boobs, but the most, this is what I like and afraid to loose"
   },
   {
     title: "Clue #3 🎼",
-    text: "Which night out feels the most 'movie-romance' elegant?",
-    options: ["Opera / gala night", "Bowling night", "Camping trip"],
-    answer: 0,
-    hint: "Think fancy clothes + chandeliers ✨"
+    text: "What is our favorite food?",
+    options: ["Feta Rice", "Chicken With Rice", "Rice", "Krete"],
+    answer: 3,
+    hint: "Seriously?! 🫥",
+    img: "img/IMG_3703.JPG",
+    message: "I mean… come on! This is easy 🤪"
   },
   {
     title: "Clue #4 💞",
-    text: "Which romance dynamic fits a story where two worlds collide?",
-    options: ["Opposites attract", "Enemies to lovers", "Friends to lovers"],
-    answer: 0,
-    hint: "Rich world vs ordinary world… you know 🤭"
+    text: "What's my favorite thing we do together?",
+    options: ["Puzzette", "Playing stupid", "Kiss", "Just being close", "Deep talks (when WE talk)", "Boobs", "Trips"],
+    answer: 3,
+    hint: "All of the above but you have to choose one 😗",
+    video: "img/IMG_6498.MOV",
+    message: "WTF",
+  },
+  {
+    title: "Clue #4 💞",
+    text: "What do I want to do with you on Valentine’s Day?",
+    options: ["Something romantic", "Watching a movie", "Something a little noughty", "All of the above"],
+    answer: 3,
+    hint: "I like everything",
+    video: "img/IMG_8475.MOV",
+    message: "It's just a cute video I found and I love it!",
   }
 ];
 
@@ -85,42 +104,66 @@ function lockButtons() {
 }
 
 function unlockButtons() {
-  [...optionsEl.querySelectorAll(".option-btn")].forEach(b => (b.disabled = false));
+  [...optionsEl.querySelectorAll(".option-btn")].forEach(b => {
+    b.disabled = false;
+    b.classList.remove("wrong"); // This clears the red color for the next try
+  });
 }
 
 function handleAnswer(button, idx) {
   const q = questions[currentQ];
-  const all = [...optionsEl.querySelectorAll(".option-btn")];
+  const rewardPopup = document.getElementById("rewardPopup");
+  const rewardImg = document.getElementById("rewardImg");
+  const rewardText = document.getElementById("rewardText");
+  const nextQBtn = document.getElementById("nextQBtn");
 
   lockButtons();
 
   if (idx === q.answer) {
     button.classList.add("correct");
-    quizHint.textContent = "Correct!! 💖✨";
-
+    
+    // Inside handleAnswer where you show the popup:
     setTimeout(() => {
+      const rewardImg = document.getElementById("rewardImg");
+      const rewardVideo = document.getElementById("rewardVideo");
+
+      if (q.video) {
+        // Show Video, Hide Image
+        rewardVideo.src = q.video;
+        rewardVideo.classList.remove("hidden");
+        rewardImg.classList.add("hidden");
+        rewardVideo.play(); // Start playing
+      } else {
+        // Show Image, Hide Video
+        rewardImg.src = q.img;
+        rewardImg.classList.remove("hidden");
+        rewardVideo.classList.add("hidden");
+        rewardVideo.pause(); // Stop any video playing in the background
+      }
+
+      rewardText.textContent = q.message || "You're so smart! ❤️";
+      rewardPopup.classList.remove("hidden");
+    }, 500);
+
+    nextQBtn.onclick = () => {
+      rewardPopup.classList.add("hidden");
       currentQ++;
       if (currentQ < questions.length) {
         renderQuestion();
+        unlockButtons();
       } else {
         progressBar.style.width = "100%";
         showProposal();
       }
-    }, 650);
-
+    };
   } else {
     button.classList.add("wrong");
-
-    // HARD MODE (no hearts): time penalty + hint
     quizHint.textContent = `Nope 😌 Hint: ${q.hint}`;
-
+    
+    // Fixed the freeze here!
     setTimeout(() => {
-      // allow retry on same question
-      all.forEach(b => {
-        b.disabled = false;
-        b.classList.remove("wrong");
-      });
-    }, 2000);
+      unlockButtons(); 
+    }, 1200);
   }
 }
 
