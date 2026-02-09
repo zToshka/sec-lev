@@ -15,6 +15,12 @@ const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const btnRow = document.getElementById("btnRow");
 
+const letterSection = document.getElementById("letterSection");
+const typewriterText = document.getElementById("typewriterText");
+const openSurpriseBtn = document.getElementById("openSurpriseBtn");
+
+// YOUR MESSAGE - Use \n for new lines
+const finalLetter = "My Dear Yineka-mu,\n\nNO is not an option!!!\n\nYou asked for it, and you got it, in your own personal way.\n\nI love you very much, and I am so glad you chose the only available option, YES, to be my Valentine.\n\nSo... are you ready?";
 let currentQ = 0;
 let noCount = 0;
 
@@ -57,7 +63,7 @@ const questions = [
     answer: 3,
     hint: "Seriously?! 🫥",
     img: "img/IMG_3703.JPG",
-    message: "I mean… come on! This is easy 🤪"
+    message: "Prove me wrong 🤪"
   },
   {
     title: "Clue #4 💞",
@@ -71,8 +77,8 @@ const questions = [
   {
     title: "Clue #4 💞",
     text: "What do I want to do with you on Valentine’s Day?",
-    options: ["Something romantic", "Watching a movie", "Something a little noughty", "All of the above"],
-    answer: 3,
+    options: ["Something romantic", "Watching a movie", "Dinner out", "Something a little noughty", "All of the above"],
+    answer: 4,
     hint: "I like everything",
     video: "img/IMG_8475.MOV",
     message: "It's just a cute video I found and I love it!",
@@ -187,10 +193,13 @@ function restartQuiz() {
 function showProposal() {
   quiz.classList.add("hidden");
   proposal.classList.remove("hidden");
+  
+  // TRIGGER AMBIENCE
+  document.body.classList.add("proposal-active");
+  startHeartRain();
 
-  // Small “reveal” on the heading only now (still not screaming too early)
-  document.getElementById("title").textContent = "One last thing… 💌";
-  document.getElementById("subtitle").textContent = "Yineka-mu, will you be my Valentine? 💖";
+  // Reset No button state just in case
+  noBtn.style.position = "static";
 }
 
 /* -----------------------
@@ -212,15 +221,19 @@ function clamp(n, min, max) {
 }
 
 function moveNoButton() {
-  const rowRect = btnRow.getBoundingClientRect();
+  const card = document.querySelector(".card");
+  const cardRect = card.getBoundingClientRect();
   const btnRect = noBtn.getBoundingClientRect();
 
-  const maxX = rowRect.width - btnRect.width;
-  const maxY = rowRect.height - btnRect.height;
+  // We allow the button to move anywhere within the main card area
+  // Subtracting margins so it doesn't hit the very edge
+  const maxX = cardRect.width - btnRect.width - 20;
+  const maxY = cardRect.height - btnRect.height - 20;
 
-  const x = Math.random() * Math.max(0, maxX);
-  const y = Math.random() * Math.max(0, maxY);
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
 
+  // We set position absolute relative to the .card
   noBtn.style.position = "absolute";
   noBtn.style.left = `${x}px`;
   noBtn.style.top = `${y}px`;
@@ -238,22 +251,31 @@ function updateNoText() {
 }
 
 function acceptLove() {
-  success.classList.remove("hidden");
-
-  // ✅ IMPORTANT: hide proposal so "No" disappears and can't move anymore
   proposal.classList.add("hidden");
-
-  // Cute reveal line:
-  document.getElementById("title").textContent = "Pretty Woman Night 💋";
-  document.getElementById("subtitle").textContent = "YAY!! Let's start with an anticipated movie night 💞🎬";
-
-  burstConfetti();
+  letterSection.classList.remove("hidden");
+  
+  // We keep the "One last thing..." title while she reads the letter
+  typeWriter(finalLetter);
 }
 
-noBtn.addEventListener("mouseenter", () => {
-  if (noCount > 0) moveNoButton();
+// 3. Logic for the final "Open my surprise" button
+openSurpriseBtn.onclick = () => {
+  letterSection.classList.add("hidden");
+  success.classList.remove("hidden");
+
+  // RESTORE YOUR FAVORITE TITLES HERE:
+  document.getElementById("title").textContent = "Pretty Woman Night 💋";
+  document.getElementById("subtitle").textContent = "YAY!! See you for Pretty Woman 💞🎬";
+
+  burstConfetti(); // Celebration!
+};
+
+// This makes it flee as soon as the mouse/finger gets near it
+noBtn.addEventListener("mouseover", () => {
+  moveNoButton();
 });
 
+// For mobile users (since there is no 'hover'), it moves when they tap it
 noBtn.addEventListener("click", (e) => {
   e.preventDefault();
   noCount++;
@@ -261,9 +283,12 @@ noBtn.addEventListener("click", (e) => {
   growYesButton();
   moveNoButton();
 
+  // If she manages to click it enough times, she wins a 'Yes' anyway
   if (noCount >= (noPhrases.length - 1)) {
     noBtn.textContent = "Ok fine… YES 💖";
-    noBtn.addEventListener("click", acceptLove, { once: true });
+    noBtn.style.position = "static"; // Put it back in the row
+    noBtn.removeEventListener("mouseover", moveNoButton);
+    noBtn.onclick = acceptLove;
   }
 });
 
@@ -329,4 +354,40 @@ function burstConfetti() {
   }
 
   animationId = requestAnimationFrame(tick);
+}
+
+function startHeartRain() {
+  const heartEmojis = ["❤️", "💖", "✨", "🌸", "💕"];
+  
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "floating-heart";
+    heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+    
+    // Randomize position and animation properties
+    const startX = Math.random() * window.innerWidth;
+    const duration = 5 + Math.random() * 5; // 5s to 10s
+    const drift = (Math.random() - 0.5) * 200; // Left or right drift
+    
+    heart.style.left = `${startX}px`;
+    heart.style.setProperty('--duration', `${duration}s`);
+    heart.style.setProperty('--drift', `${drift}px`);
+    heart.style.fontSize = `${10 + Math.random() * 20}px`;
+    
+    document.body.appendChild(heart);
+    
+    // Remove after animation to keep memory clean
+    setTimeout(() => heart.remove(), duration * 1000);
+  }, 300); // Create a new heart every 300ms
+}
+
+function typeWriter(text, i = 0) {
+  if (i < text.length) {
+    typewriterText.innerHTML += text.charAt(i);
+    // Adjust speed here (50ms is standard, lower is faster)
+    setTimeout(() => typeWriter(text, i + 1), 50);
+  } else {
+    // When finished, show the "Open Surprise" button
+    openSurpriseBtn.classList.remove("hidden");
+  }
 }
