@@ -265,7 +265,7 @@ openSurpriseBtn.onclick = () => {
 
   // RESTORE YOUR FAVORITE TITLES HERE:
   document.getElementById("title").textContent = "Pretty Woman Night 💋";
-  document.getElementById("subtitle").textContent = "YAY!! See you for Pretty Woman 💞🎬";
+  document.getElementById("subtitle").textContent = "YAY!! See you for the anticipated movie night 💞🎬";
 
   burstConfetti(); // Celebration!
 };
